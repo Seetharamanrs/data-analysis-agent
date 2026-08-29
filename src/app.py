@@ -8,11 +8,20 @@ client = InferenceClient(
     provider="auto",
     api_key=HF_TOKEN
 )
-model = "Qwen/Qwen2.5-7B-Instruct-1M"
+model = "Qwen/Qwen3-4B-Instruct-2507"
 messages = [
     {
+        "role":"system",
+        "content":"""
+You are helpful data analysis assistant 
+You help users to understand dataset and perform 
+data analysis tasks.
+Explain concpets clearly and precisely.
+if you aren't sure of something reply that's i am out of content """
+    },
+    {
         "role": "user",
-        "content": "What is machine learning?"
+        "content": "What is the average of 10, 20, 30, 40 and 50?"
     }
 ]
 response = client.chat.completions.create(
