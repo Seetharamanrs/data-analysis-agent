@@ -31,20 +31,22 @@ response = client.chat.completions.create(
     messages=messages
 )
 print(response.choices[0].message.content)
+# query = """
+# SELECT
+#     c.city,
+#     SUM(oi.quantity * oi.unit_price) AS total_sales
+# FROM customers c
+# JOIN orders o
+#     ON c.customer_id = o.customer_id
+# JOIN order_items oi
+#     ON o.order_id = oi.order_id
+# WHERE o.order_status = 'Completed'
+# GROUP BY c.city
+# ORDER BY total_sales DESC;
+# """
 query = """
-SELECT
-    c.city,
-    SUM(oi.quantity * oi.unit_price) AS total_sales
-FROM customers c
-JOIN orders o
-    ON c.customer_id = o.customer_id
-JOIN order_items oi
-    ON o.order_id = oi.order_id
-WHERE o.order_status = 'Completed'
-GROUP BY c.city
-ORDER BY total_sales DESC;
+DELETE FROM customers;
 """
-
 result = query_database(query)
 
 print(result)
