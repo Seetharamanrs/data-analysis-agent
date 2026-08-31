@@ -7,13 +7,20 @@ def get_connection():
 
 
 def query_database(query):
+    """
+    Execute a read-only SQL query against the sales database.
+    """
+    if not query.strip().lower().startswith("select"):
+        raise ValueError("Only SELECT queries are allowed.")
     connection=get_connection()
-    cursor = connection.cursor()
+    try:
+        cursor = connection.cursor()
 
-    cursor.execute(query)
+        cursor.execute(query)
 
-    results = cursor.fetchall()
+        results = cursor.fetchall()
 
-    connection.close()
 
-    return results
+        return results
+    finally:
+        connection.close()    
