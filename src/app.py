@@ -31,7 +31,6 @@ tools = [
     }
 ]
 
-message
 
 messages = [
     {
