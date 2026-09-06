@@ -9,6 +9,7 @@ client = InferenceClient(
     provider="auto",
     api_key=HF_TOKEN
 )
+
 model = "Qwen/Qwen3-4B-Instruct-2507"
 tools = [
     {
