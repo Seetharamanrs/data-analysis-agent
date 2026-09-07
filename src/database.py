@@ -15,9 +15,7 @@ def query_database(query):
     connection=get_connection()
     try:
         cursor = connection.cursor()
-
         cursor.execute(query)
-
         results = cursor.fetchall()
 
 
