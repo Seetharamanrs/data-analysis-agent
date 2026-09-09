@@ -4,9 +4,6 @@ db_path="data/sales.db"
 def get_connection():
     connection=sqlite3.connect(db_path)
     return connection
-
-
-
 def query_database(query):
     """
     Execute a read-only SQL query against the sales database.
