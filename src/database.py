@@ -6,6 +6,7 @@ def get_connection():
     return connection
 
 
+
 def query_database(query):
     """
     Execute a read-only SQL query against the sales database.
