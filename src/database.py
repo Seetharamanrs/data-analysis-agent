@@ -11,7 +11,6 @@ def query_database(query):
     if not query.strip().lower().startswith("select"):
         raise ValueError("Only SELECT queries are allowed.")
     connection=get_connection()
-
     try:
         cursor = connection.cursor()
         cursor.execute(query)
