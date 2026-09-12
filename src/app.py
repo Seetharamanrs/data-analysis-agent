@@ -2,6 +2,7 @@ from huggingface_hub import InferenceClient
 from database import query_database
 from dotenv import load_dotenv
 import os
+import json
 
 load_dotenv()
 HF_TOKEN = os.getenv("HF_TOKEN")
@@ -79,5 +80,20 @@ print(response.choices[0].message.content)
 # print(result)
 
 message= response.choices[0].message
+if message.tool_calls:
+
+    print("Tool requested by LLM.")
+
+    tool_call = message.tool_calls[0]
+
+    tool_name = tool_call.function.name
+
+    arguments = json.loads(
+        tool_call.function.arguments
+    )
+
+    print("Tool:", tool_name)
+    print("Arguments:", arguments)
+
 print("LLM response:")
 print(message)
