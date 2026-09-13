@@ -2,6 +2,7 @@ from huggingface_hub import InferenceClient
 from database import query_database
 from dotenv import load_dotenv
 import os
+from database import query_database
 import json
 
 load_dotenv()
@@ -57,7 +58,7 @@ response = client.chat.completions.create(
     model=model,
     messages=messages,
     tools=tools,
-    tools_choice="auto"
+    tool_choice="auto"
 )
 print(response.choices[0].message.content)
 # query = """
@@ -94,6 +95,63 @@ if message.tool_calls:
 
     print("Tool:", tool_name)
     print("Arguments:", arguments)
+    if tool_name == "database_tool":
 
-print("LLM response:")
-print(message)
+        result =  query_database(
+            arguments["query"]
+        )
+
+        print("Database result:")
+        print(result)
+
+
+        # Adding  the assistant's tool-call message
+
+        messages.append({
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "id": tool_call.id,
+                    "type": "function",
+                    "function": {
+                        "name": tool_name,
+                        "arguments": json.dumps(arguments)
+                    }
+                }
+            ]
+        })
+        # Add the tool result
+
+        messages.append({
+            "role": "tool",
+            "tool_call_id": tool_call.id,
+            "content": json.dumps(result)
+        })
+
+
+        # 10. Send result back to LLM
+        final_response = client.chat.completions.create(
+            model=model,
+            messages=messages
+        )
+
+
+        # 11. Print final answer
+
+        final_answer = (
+            final_response
+            .choices[0]
+            .message
+            .content
+        )
+
+        print("\nFinal Answer:")
+        print(final_answer)
+
+
+else:
+
+
+    print("\nFinal Answer:")
+    print(message.content)
+
