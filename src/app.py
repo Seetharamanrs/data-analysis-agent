@@ -39,19 +39,27 @@ messages = [
         "content": """
         You are a helpful data analysis assistant.
 
-        You have access to a sales database tool.
+        You have access to a sales database.
 
-        Use the database tool whenever the user asks for
-        information that needs to be retrieved from the database.
+        When the user asks about sales data:
 
-        Do not invent database information.
+        1. Determine what information is required.
+        2. Use the database_tool.
+        3. Generate a read-only SELECT query.
+        4. Analyze the returned data.
+        5. Give a clear and concise answer.
+
+        Do not invent database values.
+
+        Only use information returned by the database.
         """
     },
     {
         "role": "user",
-        "content": "Which city generated the highest sales?"
+        "content": user_question
     }
 ]
+
 
 response = client.chat.completions.create(
     model=model,
