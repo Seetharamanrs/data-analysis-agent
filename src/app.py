@@ -31,6 +31,10 @@ tools = [
         }
     }
 ]
+user_question = input(
+    "Ask a question about the sales data: "
+)
+
 
 
 messages = [
@@ -102,19 +106,25 @@ if message.tool_calls:
 
     print("Tool:", tool_name)
     print("Arguments:", arguments)
-    if tool_name == "database_tool":
-
-        result =  query_database(
-            arguments["query"]
-        )
-
-        print("Database result:")
-        print(result)
-
 
         # Adding  the assistant's tool-call message
+    if tool_name == "database_tool":
+        try:
+            result = query_database(
+                arguments["query"]
+            )
 
-        messages.append({
+        except Exception as e:
+
+            result = {
+                "error": str(e)
+            }
+
+
+        print("\nDatabase result:")
+        print(result)
+
+    messages.append({
             "role": "assistant",
             "tool_calls": [
                 {
@@ -129,7 +139,7 @@ if message.tool_calls:
         })
         # Add the tool result
 
-        messages.append({
+    messages.append({
             "role": "tool",
             "tool_call_id": tool_call.id,
             "content": json.dumps(result)
@@ -137,7 +147,7 @@ if message.tool_calls:
 
 
         # 10. Send result back to LLM
-        final_response = client.chat.completions.create(
+    final_response = client.chat.completions.create(
             model=model,
             messages=messages
         )
@@ -145,15 +155,15 @@ if message.tool_calls:
 
         # 11. Print final answer
 
-        final_answer = (
+    final_answer = (
             final_response
             .choices[0]
             .message
             .content
         )
 
-        print("\nFinal Answer:")
-        print(final_answer)
+    print("\nFinal Answer:")
+    print(final_answer)
 
 
 else:
