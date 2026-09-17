@@ -6,3 +6,5 @@ def calculate_statistics(values):
         return {
             "error": "No values provided."
         }
+
+    
