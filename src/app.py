@@ -29,7 +29,26 @@ tools = [
                 "required": ["query"]
             }
         }
+    },{
+    "type": "function",
+    "function": {
+        "name": "analysis_tool",
+        "description": "Calculate statistical measures such as mean, median, minimum, maximum, and standard deviation for a list of numbers.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "description": "A list of numerical values to analyze."
+                }
+            },
+            "required": ["values"]
+        }
     }
+}
 ]
 user_question = input(
     "Ask a question about the sales data: "
