@@ -129,9 +129,7 @@ if message.tool_calls:
         # Adding  the assistant's tool-call message
     if tool_name == "database_tool":
         try:
-            result = query_database(
-                arguments["query"]
-            )
+            result = query_database(arguments["query"])   
 
         except Exception as e:
 
@@ -142,6 +140,8 @@ if message.tool_calls:
 
         print("\nDatabase result:")
         print(result)
+    elif tool_name == "analysis_tool":
+        result = calculate_statistics(arguments["values"])
 
     messages.append({
             "role": "assistant",
