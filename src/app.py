@@ -54,8 +54,6 @@ user_question = input(
     "Ask a question about the sales data: "
 )
 
-
-
 messages = [
     {
         "role": "system",
