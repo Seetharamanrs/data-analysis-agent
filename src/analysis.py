@@ -13,5 +13,6 @@ def calculate_statistics(values):
         "median": statistics.median(values),
         "minimum": min(values),
         "maximum": max(values),
-        "standard_deviation": statistics.stdev(values) if len(values) > 1 else 0
+        "standard_deviation": 
+        statistics.stdev(values) if len(values) > 1 else 0
     }
