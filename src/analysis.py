@@ -1,7 +1,5 @@
 import statistics
 
-def cal(v):
-    return "Rent"
 def calculate_statistics(values):
     if not values:
         return {
