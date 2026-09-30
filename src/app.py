@@ -173,9 +173,6 @@ if message.tool_calls:
     tools=tools,
     tool_choice="auto"
 )
-
-
-
         # 11. Print final answer
 
     final_answer = (
