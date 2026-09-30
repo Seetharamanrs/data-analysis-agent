@@ -168,9 +168,12 @@ if message.tool_calls:
 
         # 10. Send result back to LLM
     final_response = client.chat.completions.create(
-            model=model,
-            messages=messages
-        )
+    model=model,
+    messages=messages,
+    tools=tools,
+    tool_choice="auto"
+)
+
 
 
         # 11. Print final answer
