@@ -12,12 +12,12 @@ client = InferenceClient(
     api_key=HF_TOKEN
 )
 
-load_dotenv()
-HF_TOKEN = os.getenv("HF_TOKEN")
-client = InferenceClient(
-    provider="auto",
-    api_key=HF_TOKEN
-)
+# load_dotenv()
+# HF_TOKEN = os.getenv("HF_TOKEN")
+# client = InferenceClient(
+#     provider="auto",
+#     api_key=HF_TOKEN
+# )
 model = "Qwen/Qwen3-4B-Instruct-2507"
 tools = [
     
