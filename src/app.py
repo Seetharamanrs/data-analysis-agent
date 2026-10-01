@@ -3,6 +3,7 @@ from database import query_database
 from dotenv import load_dotenv
 import os
 from database import query_database
+from analysis import calculate_statistics
 import json
 
 load_dotenv()
@@ -115,69 +116,69 @@ print(response.choices[0].message.content)
 # """
 # result = query_database(query)
 # print(result)
+while True:
+    message= response.choices[0].message
+    if message.tool_calls:
 
-message= response.choices[0].message
-if message.tool_calls:
+        print("Tool requested by LLM.")
 
-    print("Tool requested by LLM.")
+        tool_call = message.tool_calls[0]
 
-    tool_call = message.tool_calls[0]
+        tool_name = tool_call.function.name
 
-    tool_name = tool_call.function.name
+        arguments = json.loads(
+            tool_call.function.arguments
+        )
 
-    arguments = json.loads(
-        tool_call.function.arguments
-    )
+        print("Tool:", tool_name)
+        print("Arguments:", arguments)
 
-    print("Tool:", tool_name)
-    print("Arguments:", arguments)
+            # Adding  the assistant's tool-call message
+        if tool_name == "database_tool":
+            try:
+                result = query_database(arguments["query"])   
 
-        # Adding  the assistant's tool-call message
-    if tool_name == "database_tool":
-        try:
-            result = query_database(arguments["query"])   
+            except Exception as e:
 
-        except Exception as e:
-
-            result = {
-                "error": str(e)
-            }
-
-
-        print("\nDatabase result:")
-        print(result)
-    elif tool_name == "analysis_tool":
-        result = calculate_statistics(arguments["values"])
-
-    messages.append({
-            "role": "assistant",
-            "tool_calls": [
-                {
-                    "id": tool_call.id,
-                    "type": "function",
-                    "function": {
-                        "name": tool_name,
-                        "arguments": json.dumps(arguments)
-                    }
+                result = {
+                    "error": str(e)
                 }
-            ]
-        })
-        # Add the tool result
-
-    messages.append({
-            "role": "tool",
-            "tool_call_id": tool_call.id,
-            "content": json.dumps(result)
-        })
 
 
-        # 10. Send result back to LLM
-    final_response = client.chat.completions.create(
-    model=model,
-    messages=messages,
-    tools=tools,
-    tool_choice="auto"
-)
+            print("\nDatabase result:")
+            print(result)
+        elif tool_name == "analysis_tool":
+            result = calculate_statistics(arguments["values"])
+
+        messages.append({
+                "role": "assistant",
+                "tool_calls": [
+                    {
+                        "id": tool_call.id,
+                        "type": "function",
+                        "function": {
+                            "name": tool_name,
+                            "arguments": json.dumps(arguments)
+                        }
+                    }
+                ]
+            })
+            # Add the tool result
+
+        messages.append({
+                "role": "tool",
+                "tool_call_id": tool_call.id,
+                "content": json.dumps(result)
+            })
+
+
+            # 10. Send result back to LLM
+        final_response = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        tools=tools,
+        tool_choice="auto"
+    )
         # 11. Print final answer
 
     final_answer = (
