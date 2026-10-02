@@ -71,18 +71,28 @@ messages = [
 
         You have access to a sales database.
 
-        When the user asks about sales data:
+        You have access to two tools:
 
-        1. Determine what information is required.
-        2. Use the database_tool.
-        3. Generate a read-only SELECT query.
-        4. Analyze the returned data.
-        5. Give a clear and concise answer.
+1. database_tool
+   - Use this when information must be retrieved from the sales database.
+   - Use only read-only SELECT queries.
+   - Do not modify, delete, or insert database data.
 
-        Do not invent database values.
+2. analysis_tool
+   - Use this when numerical calculations or statistical analysis are required.
+   - It can calculate count, mean, median, minimum, maximum, and standard deviation.
 
-        Only use information returned by the database.
-        """
+Follow these rules:
+
+1. Understand what the user is asking.
+2. Decide which tool is required.
+3. Use database_tool when data must be retrieved from the database.
+4. Use analysis_tool when numerical analysis is required.
+5. If both data retrieval and calculation are required, use the tools in sequence.
+6. Never invent database values.
+7. Only use information returned by the tools.
+8. If a tool returns an error, do not invent an answer. Explain the problem clearly.
+"""
     },
     {
         "role": "user",
