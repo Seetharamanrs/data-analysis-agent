@@ -26,7 +26,16 @@ tools = [
         "type": "function",
         "function": {
             "name": "database_tool",
-            "description": "Query the sales database to retrieve current business information. Use this tool when the user asks about customers, products, orders, sales, revenue, cities, or other information stored in the database.",
+            "description": """
+        Retrieve information from the sales database.
+
+        Use this tool when the user asks about:
+        customers, products, orders, sales, revenue,
+        cities, order status, or other information
+        stored in the database.
+
+        Only read-only SELECT queries are allowed.
+        """,
             "parameters": {
                 "type": "object",
                 "properties": {
