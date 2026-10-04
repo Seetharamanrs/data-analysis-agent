@@ -167,7 +167,13 @@ while True:
             print("\nDatabase result:")
             print(result)
         elif tool_name == "analysis_tool":
-            result = calculate_statistics(arguments["values"])
+            try:
+                result = calculate_statistics(
+            arguments["values"])
+            except Exception as e:
+                result = {
+                    "error": str(e)
+                }
 
         messages.append({
                 "role": "assistant",
