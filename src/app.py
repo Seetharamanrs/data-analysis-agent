@@ -68,9 +68,15 @@ tools = [
     }
 }
 ]
-user_question = input(
-    "Ask a question about the sales data: "
-)
+while True:
+
+    user_question = input(
+        "\nYou: "
+    )
+
+    if user_question.lower() in ["exit", "quit"]:
+        print("Goodbye!")
+        break
 
 messages = [
     {
