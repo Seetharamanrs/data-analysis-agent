@@ -114,8 +114,6 @@ Follow these rules:
         "content": user_question
     }
 ]
-
-
 response = client.chat.completions.create(
     model=model,
     messages=messages,
@@ -222,10 +220,7 @@ while True:
     print("\nFinal Answer:")
     print(final_answer)
 
-
 else:
-
-
     print("\nFinal Answer:")
     print(message.content)
 
